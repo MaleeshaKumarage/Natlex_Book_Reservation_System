@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "UcQVg3vOq+sYDeCp6LjYGUJhocGx0v047M9HnqE2L1fiwiq2n8A/ktUROI3wZmZElgRd3P6gcPbbkttdx6QWnA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\asus\\source\\repos\\Natlex_Book_Reservation_System\\Infrastructure\\Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\asus\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\asus\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

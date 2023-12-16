@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "xQ/ZIvuhMVkFZkBgKnpzuuzxLF7p24QLGkLVfQveaf/If9+4JA3RX6t5bsQT3vwnQHse5OBDKARHI1/eoZ5R3w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\asus\\source\\repos\\Natlex_Book_Reservation_System\\Application\\Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\asus\\.nuget\\packages\\fluentvalidation\\11.8.1\\fluentvalidation.11.8.1.nupkg.sha512",
+    "C:\\Users\\asus\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.8.1\\fluentvalidation.dependencyinjectionextensions.11.8.1.nupkg.sha512",
+    "C:\\Users\\asus\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
+    "C:\\Users\\asus\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\asus\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
