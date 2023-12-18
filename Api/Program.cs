@@ -1,5 +1,12 @@
 using Application;
+using Application.Abstraction;
+using Application.Book.CommandHandler;
+using Application.Book.Commands;
 using Infrastructure;
+using Infrastructure.Repository;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +17,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//var cs = builder.Configuration.GetConnectionString("Default");
+builder.Services.AddDbContext<BookStoreDbContext>(opt => opt.UseInMemoryDatabase(databaseName: "BookStore"));
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(CreateBook)));
 
 builder.Services
     .AddApplication()

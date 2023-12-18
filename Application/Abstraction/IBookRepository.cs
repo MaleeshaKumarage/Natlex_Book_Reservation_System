@@ -1,0 +1,22 @@
+﻿using Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Domain.Entities;
+
+namespace Application.Abstraction
+{
+    public interface IBookRepository
+    {
+        Task<ICollection<Domain.Entities.Book>> GetAllBooks();
+        Task<Domain.Entities.Book> AddBook(Domain.Entities.Book book);
+        Task<Domain.Entities.Book> GetBookById(Guid id);
+        Task<Domain.Entities.Book> GetBookByTitle(string name);
+        Task<Domain.Entities.Book> UpdateBook(Guid id, Domain.Entities.Book book);
+        Task DeleteBook(Guid id);
+
+
+    }
+}
