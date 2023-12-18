@@ -1,50 +1,87 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Book.Commands;
+using Application.Book.Queries;
+using Application.StatusHistory.Queries;
+using Domain.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Mvc;
+using System.CodeDom;
 
 namespace Api.Controllers
 {
     public class BookReservationController : ControllerBase
     {
-        //private readonly IBookService _bookService;
+        public readonly IMediator _mediator;
 
-        public BookReservationController(/*IBookService bookService*/)
+        public BookReservationController(IMediator mediator)
         {
-            //_bookService = bookService;
+            _mediator = mediator;
         }
 
         [HttpPost("reserve")]
-        public async Task<IActionResult> ReserveBook(int id /*,[FromBody] ReserveRequest request*/)
+        public async Task<IResult> ReserveBook(Guid bookId)
         {
-            //var success = await _bookService.ReserveBookAsync(id, request.Comment);
-            //if (!success)
-            //{
-            //    return NotFound($"Book with ID {id} not found or already reserved");
-            //}
+            try
+            {
 
-            return Ok();
+                var reservation = await _mediator.Send(new CreateReservation()
+                {
+                    BookId = bookId
+                });
+                if (reservation is null)
+                {
+                    return TypedResults.NotFound();
+                }
+                return TypedResults.Ok(reservation);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         [HttpPost("remove-reservation")]
-        public async Task<IActionResult> RemoveReservation(int id)
+        public async Task<IResult> RemoveReservation(Guid bookId)
         {
-            //var success = await _bookService.RemoveReservationAsync(id);
-            //if (!success)
-            //{
-            //    return NotFound($"Book with ID {id} not found or not reserved");
-            //}
+            try
+            {
+                var removedReservation = await _mediator.Send(new RemoveReservation()
+                {
+                    BookId = bookId
+                });
+                if (removedReservation is null)
+                {
+                    return TypedResults.NotFound();
+                }
+                return TypedResults.Ok(removedReservation);
+            }
+            catch (Exception ex)
+            {
 
-            return Ok();
+                throw;
+            }
+
         }
 
-        [HttpGet("status-history/{id}")]
-        public async Task<IActionResult> GetStatusHistory(int id)
+        [HttpGet("status-history/{bookId}")]
+        public async Task<IActionResult> GetStatusHistory(Guid bookId)
         {
-            //var statusHistory = await _bookService.GetStatusHistoryAsync(id);
-            //if (statusHistory == null)
-            //{
-            //    return NotFound($"Book with ID {id} not found");
-            //}
+            try
+            {
 
-            return Ok(/*statusHistory*/);
+                var statusHistory = await _mediator.Send(new GetStatusHistory()
+                {
+                    BookId = bookId
+                });
+
+                return Ok(statusHistory);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }

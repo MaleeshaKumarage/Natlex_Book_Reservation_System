@@ -9,7 +9,7 @@ namespace Application.Abstraction
 {
     public interface IStatusHistoryRepository
     {
-        Task<StatusHistory> GetStatusHistoryByBookId(Guid id);
-        Task<StatusHistory> UpdateStatusHistoryByBookId(Guid id, StatusHistory statusHistory);
+        Task<Domain.Entities.StatusHistory> AddStatusHistory(Guid id,bool isReserved);
+        Task<List<Domain.Entities.StatusHistory>> GetStatusHistoryByBookId(Guid id);
     }
 }

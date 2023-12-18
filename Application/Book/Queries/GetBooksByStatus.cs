@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Book.Queries
 {
-    public class GetAllBooks: IRequest<ICollection<Domain.Entities.Book>>
+    public class GetBooksByStatus : IRequest<ICollection<Domain.Entities.Book>>
     {
-
+        public bool isReserved { get; set; }
     }
 }

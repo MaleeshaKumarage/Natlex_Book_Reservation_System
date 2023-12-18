@@ -25,6 +25,20 @@ namespace Infrastructure.Repository
             return book;
         }
 
+        public async Task<Book> AddReservation(Guid bookId)
+        {
+            var existingBook = await _bookStoreDbContext.books.FindAsync(bookId);
+            if (existingBook == null)
+            {
+                return null;
+            }
+            existingBook.IsReserved = true;
+
+
+            await _bookStoreDbContext.SaveChangesAsync();
+            return existingBook;
+        }
+
         public async Task DeleteBook(Guid id)
         {
             var book = _bookStoreDbContext.books.FirstOrDefault(b => b.Id == id);
@@ -43,10 +57,14 @@ namespace Infrastructure.Repository
 
         }
 
-        public async Task<Book> GetBookById(Guid id)
+        public async Task<Book?> GetBookById(Guid id)
         {
-            return await _bookStoreDbContext.books.FirstOrDefaultAsync(b => b.Id == id);
-
+            var book = await _bookStoreDbContext.books.FirstOrDefaultAsync(b => b.Id == id);
+            if (book != null)
+            {
+                return book;
+            }
+            return null;
         }
 
         public async Task<Book> GetBookByTitle(string name)
@@ -54,6 +72,24 @@ namespace Infrastructure.Repository
             var book = await _bookStoreDbContext.books.FirstOrDefaultAsync(b => b.Title == name);
 
             return book;
+        }
+
+        public async Task<List<Book>> GetBooksByStatus(bool isReserved)
+        {
+            return _bookStoreDbContext.books.Where(a => a.IsReserved == isReserved).ToList();
+        }
+
+        public async Task<Book> RemoveReservation(Guid bookId)
+        {
+            var existingBook = await _bookStoreDbContext.books.FindAsync(bookId);
+            if (existingBook == null)
+            {
+                return null;
+            }
+            existingBook.IsReserved = false;
+
+            await _bookStoreDbContext.SaveChangesAsync();
+            return existingBook;
         }
 
         public async Task<Book> UpdateBook(Guid Id, Book book)

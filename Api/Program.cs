@@ -20,6 +20,7 @@ builder.Services.AddSwaggerGen();
 //var cs = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<BookStoreDbContext>(opt => opt.UseInMemoryDatabase(databaseName: "BookStore"));
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IStatusHistoryRepository, StatusHistoryRepository>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(CreateBook)));
 

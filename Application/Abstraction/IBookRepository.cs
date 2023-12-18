@@ -15,8 +15,10 @@ namespace Application.Abstraction
         Task<Domain.Entities.Book> GetBookById(Guid id);
         Task<Domain.Entities.Book> GetBookByTitle(string name);
         Task<Domain.Entities.Book> UpdateBook(Guid id,Domain.Entities.Book book);
+        Task<Domain.Entities.Book> AddReservation(Guid bookId);
+        Task<Domain.Entities.Book> RemoveReservation(Guid bookId);
         Task DeleteBook(Guid id);
-
+        Task<List<Domain.Entities.Book>> GetBooksByStatus(bool isReserved);
 
     }
 }
