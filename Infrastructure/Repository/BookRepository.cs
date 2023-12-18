@@ -37,14 +37,16 @@ namespace Infrastructure.Repository
 
         }
 
-        public Task<ICollection<Book>> GetAllBooks()
+        public Task<List<Book>> GetAllBooks()
         {
-            throw new NotImplementedException();
+            return _bookStoreDbContext.books.ToListAsync();
+
         }
 
-        public Task<Book> GetBookById(Guid id)
+        public async Task<Book> GetBookById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _bookStoreDbContext.books.FirstOrDefaultAsync(b => b.Id == id);
+
         }
 
         public async Task<Book> GetBookByTitle(string name)
@@ -54,9 +56,21 @@ namespace Infrastructure.Repository
             return book;
         }
 
-        public Task<Book> UpdateBook(Guid id, Book book)
+        public async Task<Book> UpdateBook(Guid Id, Book book)
         {
-            throw new NotImplementedException();
+            var existingBook = await _bookStoreDbContext.books.FindAsync(Id);
+            if (existingBook == null)
+            {
+                return null;
+            }
+            existingBook.Title = book.Title;
+            existingBook.Author = book.Author;
+            existingBook.IsReserved = book.IsReserved;
+            existingBook.ReservationComment = book.ReservationComment;
+
+
+            await _bookStoreDbContext.SaveChangesAsync();
+            return existingBook;
         }
     }
 }

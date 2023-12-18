@@ -21,14 +21,14 @@ namespace Application.Book.CommandHandler
         {
             var newBook = new Domain.Entities.Book
             {
-                Id = request.BookId,
+                Id = Guid.NewGuid(),
                 Title = request.Title,
                 Author = request.Author,
-                IsReserved = request.IsReserved,
-                ReservationComment = request.ReservationComment
+                //IsReserved = request.IsReserved,
+                //ReservationComment = request.ReservationComment
             };
             return await _bookRepository.AddBook(newBook);
 
-        }
     }
+}
 }

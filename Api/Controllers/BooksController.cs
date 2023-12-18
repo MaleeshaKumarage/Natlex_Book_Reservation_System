@@ -20,9 +20,17 @@ namespace Api.Controllers
         }
         // GET: api/<BooksController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IResult> GetAllBooks()
         {
-            return new string[] { "value1", "value2" };
+            var getAllBooks = new GetAllBooks();
+
+
+            var books = await _mediator.Send(getAllBooks);
+            if (books == null)
+            {
+                return TypedResults.NotFound();
+            }
+            return TypedResults.Ok(books);
         }
 
         // GET api/<BooksController>/5
@@ -45,29 +53,29 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<IResult> Post([FromBody] CreateBook book)
         {
-            try
-            {
 
-                await _mediator.Send(book);
-            }
-            catch (Exception ex)
-            {
+            await _mediator.Send(book);
 
-                throw;
-            }
             return TypedResults.Ok(book);
         }
 
         // PUT api/<BooksController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<IResult> Put([FromBody] UpdateBook updateBook)
         {
+            var updatedBook = await _mediator.Send(updateBook);
+            return TypedResults.Ok(updatedBook);
         }
 
         // DELETE api/<BooksController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async void Delete(Guid id)
         {
+            var deleteBook = new DeleteBook()
+            {
+                Id = id
+            };
+            await _mediator.Send(deleteBook);
         }
     }
 }
