@@ -20,9 +20,9 @@ namespace Infrastructure.Repository
 
         public async Task<Book> AddBook(Book book)
         {
-            _bookStoreDbContext.books.Add(book);
+            var savedBook = await _bookStoreDbContext.books.AddAsync(book);
             await _bookStoreDbContext.SaveChangesAsync();
-            return book;
+            return savedBook.Entity;
         }
 
         public async Task<Book> AddReservation(Guid bookId)
@@ -39,16 +39,16 @@ namespace Infrastructure.Repository
             return existingBook;
         }
 
-        public async Task DeleteBook(Guid id)
+        public async Task<Book> DeleteBook(Guid id)
         {
             var book = _bookStoreDbContext.books.FirstOrDefault(b => b.Id == id);
-            if (book is null)
+            if (book != null)
             {
-                return;
+                var deletedBook = _bookStoreDbContext.books.Remove(book);
+                await _bookStoreDbContext.SaveChangesAsync();
+                return deletedBook.Entity;
             }
-            _bookStoreDbContext.books.Remove(book);
-            await _bookStoreDbContext.SaveChangesAsync();
-
+            return null;
         }
 
         public Task<List<Book>> GetAllBooks()
@@ -69,8 +69,7 @@ namespace Infrastructure.Repository
 
         public async Task<Book> GetBookByTitle(string name)
         {
-            var book = await _bookStoreDbContext.books.FirstOrDefaultAsync(b => b.Title == name);
-
+            var book = await _bookStoreDbContext.books.Where(b => b.Title == name).FirstOrDefaultAsync();
             return book;
         }
 

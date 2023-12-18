@@ -24,11 +24,11 @@ namespace Application.Book.CommandHandler
                 Id = Guid.NewGuid(),
                 Title = request.Title,
                 Author = request.Author,
-                //IsReserved = request.IsReserved,
-                //ReservationComment = request.ReservationComment
+                IsReserved = false,
+                ReservationComment = string.Empty
             };
             return await _bookRepository.AddBook(newBook);
 
+        }
     }
-}
 }

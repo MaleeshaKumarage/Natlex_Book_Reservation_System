@@ -9,6 +9,8 @@ using System.CodeDom;
 
 namespace Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class BookReservationController : ControllerBase
     {
         public readonly IMediator _mediator;
@@ -19,69 +21,54 @@ namespace Api.Controllers
         }
 
         [HttpPost("reserve")]
-        public async Task<IResult> ReserveBook(Guid bookId)
+        public async Task<IActionResult> ReserveBook(Guid bookId)
         {
-            try
-            {
 
-                var reservation = await _mediator.Send(new CreateReservation()
-                {
-                    BookId = bookId
-                });
-                if (reservation is null)
-                {
-                    return TypedResults.NotFound();
-                }
-                return TypedResults.Ok(reservation);
-            }
-            catch (Exception ex)
-            {
 
-                throw;
+            var reservation = await _mediator.Send(new CreateReservation()
+            {
+                BookId = bookId
+            });
+            if (reservation != null)
+            {
+                return NotFound("The specified book was not found.");
             }
+            return Ok(reservation);
         }
+
+
 
         [HttpPost("remove-reservation")]
-        public async Task<IResult> RemoveReservation(Guid bookId)
+        public async Task<IActionResult> RemoveReservation(Guid bookId)
         {
-            try
+            var removedReservation = await _mediator.Send(new RemoveReservation()
             {
-                var removedReservation = await _mediator.Send(new RemoveReservation()
-                {
-                    BookId = bookId
-                });
-                if (removedReservation is null)
-                {
-                    return TypedResults.NotFound();
-                }
-                return TypedResults.Ok(removedReservation);
-            }
-            catch (Exception ex)
+                BookId = bookId
+            });
+            if (removedReservation is null)
             {
-
-                throw;
+                return NotFound("The specified book was not found.");
             }
-
+            return Ok(removedReservation);
         }
+
+
 
         [HttpGet("status-history/{bookId}")]
         public async Task<IActionResult> GetStatusHistory(Guid bookId)
         {
-            try
+
+            var statusHistory = await _mediator.Send(new GetStatusHistory()
             {
+                BookId = bookId
+            });
 
-                var statusHistory = await _mediator.Send(new GetStatusHistory()
-                {
-                    BookId = bookId
-                });
-
-                return Ok(statusHistory);
-            }
-            catch (Exception ex)
+            if (statusHistory == null)
             {
-
-                throw;
+                return NotFound($"No status history found for BookId: {bookId}");
             }
+
+            return Ok(statusHistory);
         }
     }
 }

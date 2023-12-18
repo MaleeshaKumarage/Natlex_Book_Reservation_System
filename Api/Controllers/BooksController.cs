@@ -19,54 +19,68 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IResult> GetAllBooks()
+        public async Task<IActionResult> GetAllBooks()
         {
-            var getAllBooks = new GetAllBooks();
+            var request = new GetAllBooks();
 
-            var books = await _mediator.Send(getAllBooks);
-            if (books == null)
-            {
-                return TypedResults.NotFound();
-            }
-            return TypedResults.Ok(books);
+            var books = await _mediator.Send(request);
+            return books.Count > 0
+            ? Ok(books)
+            : NotFound("Oops! It seems like the bookstore is currently empty. We searched high and low, but couldn't find any books");
         }
 
         [HttpGet("status/{isReserved}")]
-        public async Task<IResult> GetBooksByStatus(bool isReserved)
+        public async Task<IActionResult> GetBooksByStatus([FromRoute] bool isReserved)
         {
-            var getBooks = new GetBooksByStatus()
+            var request = new GetBooksByStatus()
             {
                 isReserved = isReserved
             };
 
-            var books = await _mediator.Send(getBooks);
-            if (books == null)
+            var books = await _mediator.Send(request);
+            if (books == null || !books.Any())
             {
-                return TypedResults.NotFound();
+                string statusMessage = isReserved ? "No reserved books were found" : "No non-reserved books were found";
+                return NotFound(statusMessage);
             }
-            return TypedResults.Ok(books);
+            return Ok(books);
         }
 
         [HttpGet("{title}")]
-        public async Task<IResult> GetBookByTitle(string title)
+        public async Task<IActionResult> GetBookByTitle(string title)
         {
-            var getBook = new GetBookByTitle
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                return BadRequest("Title cannot be empty or null.");
+            }
+
+            var request = new GetBookByTitle
             {
                 Title = title
             };
-            var book = await _mediator.Send(getBook);
+            var book = await _mediator.Send(request);
+
             if (book == null)
             {
-                return TypedResults.NotFound();
+                return NotFound($"No book found with the title: {title}");
             }
-            return TypedResults.Ok(book);
+            return Ok(book);
         }
 
         [HttpPost]
-        public async Task<IResult> Post([FromBody] CreateBook book)
+        public async Task<IActionResult> Post([FromBody] CreateBook book)
         {
-            await _mediator.Send(book);
-            return TypedResults.Ok(book);
+            if (book == null)
+            {
+                return BadRequest("Invalid request. The book data is missing.");
+            }
+
+            var createdBook = await _mediator.Send(book);
+            if (createdBook == null)
+            {
+                return BadRequest("The request to create the book failed");
+            }
+            return Ok(createdBook);
         }
 
         [HttpPut]
