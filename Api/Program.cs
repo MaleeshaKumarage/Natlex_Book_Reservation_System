@@ -23,7 +23,12 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IStatusHistoryRepository, StatusHistoryRepository>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(CreateBook)));
-
+using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<BookStoreDbContext>();
+    dbContext.Database.EnsureCreated();
+    dbContext.SeedData();
+}
 builder.Services
     .AddApplication()
     .AddInfrastructure()
