@@ -84,10 +84,14 @@ namespace Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IResult> Put([FromBody] UpdateBook updateBook)
+        public async Task<IActionResult> Put([FromBody] UpdateBook updateBook)
         {
             var updatedBook = await _mediator.Send(updateBook);
-            return TypedResults.Ok(updatedBook);
+            if (updatedBook == null)
+            {
+                return NotFound("The specified book was not found.");
+            }
+            return Ok(updatedBook);
         }
 
         [HttpDelete("{id}")]
