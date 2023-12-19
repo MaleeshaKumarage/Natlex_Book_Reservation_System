@@ -12,3 +12,6 @@ This project demonstrates the implementation of Clean Architecture, CQRS, and Me
 * Clean Architecture
 * Repository pattern
 * Entity Framework Core
+
+## Technologies
+The application is hosted on https://natlexbookreservationsystem.azurewebsites.net/swagger/index.html using Azure App Service Using Github WorkFlow.
