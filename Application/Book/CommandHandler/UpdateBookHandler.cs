@@ -35,7 +35,6 @@ namespace Application.Book.CommandHandler
             }
             else
             {
-                // You might want to throw an exception or handle it according to your requirements.
                 return null;
             }
         }

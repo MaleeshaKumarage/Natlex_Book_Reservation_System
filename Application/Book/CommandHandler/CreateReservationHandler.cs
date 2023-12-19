@@ -1,6 +1,7 @@
 ﻿using Application.Abstraction;
 using Application.Book.Commands;
 using Domain.Entities;
+using Domain.Exceptions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -23,21 +24,12 @@ namespace Application.Book.CommandHandler
         public async Task<Domain.Entities.StatusHistory> Handle(CreateReservation request, CancellationToken cancellationToken)
         {
             var book = await _bookRepository.GetBookById(request.BookId);
-            if (book != null)
+            if (book == null)
             {
-                try
-                {
-                    await _bookRepository.AddReservation(request.BookId);
-                    return await _statusHistoryRepository.AddStatusHistory(request.BookId,true);
-
-                }
-                catch (Exception ex)
-                {
-
-                    throw;
-                }
+                throw new NoBookFoundException("Unable to find the specified book");
             }
-            return null;
+            await _bookRepository.AddReservation(request.BookId, request.ReservationComment);
+            return await _statusHistoryRepository.AddStatusHistory(request.BookId, true);
         }
 
     }

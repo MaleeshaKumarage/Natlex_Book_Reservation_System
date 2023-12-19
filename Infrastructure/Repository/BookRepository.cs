@@ -1,5 +1,6 @@
 ﻿using Application.Abstraction;
 using Domain.Entities;
+using Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,14 +26,20 @@ namespace Infrastructure.Repository
             return savedBook.Entity;
         }
 
-        public async Task<Book> AddReservation(Guid bookId)
+        public async Task<Book> AddReservation(Guid bookId, string reservationComment)
         {
             var existingBook = await _bookStoreDbContext.books.FindAsync(bookId);
             if (existingBook == null)
             {
-                return null;
+                throw new NoBookFoundException("Unable to find the specified book");
             }
+            else if (existingBook.IsReserved)
+            {
+                throw new BookAlreadyReservedException("The requested book has already been reserved by another user");
+            }
+            
             existingBook.IsReserved = true;
+            existingBook.ReservationComment = reservationComment;
 
 
             await _bookStoreDbContext.SaveChangesAsync();

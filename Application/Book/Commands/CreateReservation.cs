@@ -10,5 +10,6 @@ namespace Application.Book.Commands
     public class CreateReservation : IRequest<Domain.Entities.StatusHistory>
     {
         public Guid BookId { get; set; }
+        public string ReservationComment { get; set; }
     }
 }

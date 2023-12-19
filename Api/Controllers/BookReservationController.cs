@@ -2,6 +2,7 @@
 using Application.Book.Queries;
 using Application.StatusHistory.Queries;
 using Domain.Entities;
+using Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
@@ -21,22 +22,27 @@ namespace Api.Controllers
         }
 
         [HttpPost("reserve")]
-        public async Task<IActionResult> ReserveBook(Guid bookId)
+        public async Task<IActionResult> ReserveBook(Guid bookId, string reservationComment)
         {
-
-
-            var reservation = await _mediator.Send(new CreateReservation()
+            try
             {
-                BookId = bookId
-            });
-            if (reservation != null)
-            {
-                return NotFound("The specified book was not found.");
+
+                var reservation = await _mediator.Send(new CreateReservation()
+                {
+                    BookId = bookId,
+                    ReservationComment = reservationComment
+                });
+                return Ok(reservation);
             }
-            return Ok(reservation);
+            catch (NoBookFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (BookAlreadyReservedException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-
-
 
         [HttpPost("remove-reservation")]
         public async Task<IActionResult> RemoveReservation(Guid bookId)
