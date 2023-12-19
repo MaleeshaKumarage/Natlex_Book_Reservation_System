@@ -95,13 +95,18 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async void Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var deleteBook = new DeleteBook()
             {
                 Id = id
             };
-            await _mediator.Send(deleteBook);
+            var deletedBook = await _mediator.Send(deleteBook);
+            if (deletedBook == null)
+            {
+                return NotFound("The specified book was not found.");
+            }
+            return Ok(deletedBook);
         }
     }
 }
