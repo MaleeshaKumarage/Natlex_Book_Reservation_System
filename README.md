@@ -5,6 +5,7 @@ This project demonstrates the implementation of Clean Architecture, CQRS, and Me
 
 ## Technologies
 
+* Docker
 * .NET 8.0
 * MediatR
 * CQRS
