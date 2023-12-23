@@ -37,7 +37,7 @@ namespace Infrastructure.Repository
             {
                 throw new BookAlreadyReservedException("The requested book has already been reserved by another user");
             }
-            
+
             existingBook.IsReserved = true;
             existingBook.ReservationComment = reservationComment;
 
@@ -58,10 +58,18 @@ namespace Infrastructure.Repository
             return null;
         }
 
-        public Task<List<Book>> GetAllBooks()
+        public async Task<List<Book>> GetAllBooks()
         {
-            return _bookStoreDbContext.books.ToListAsync();
-
+            var bookList = await _bookStoreDbContext.books.ToListAsync();
+            foreach (var item in bookList)
+            {
+                var statusHistories = _bookStoreDbContext.statusHistory.Where(a => a.BookId == item.Id).ToList();
+                if (statusHistories.Count > 0)
+                {
+                    item.StatusHistories = (ICollection<StatusHistory>)statusHistories;
+                }
+            }
+            return bookList;
         }
 
         public async Task<Book?> GetBookById(Guid id)

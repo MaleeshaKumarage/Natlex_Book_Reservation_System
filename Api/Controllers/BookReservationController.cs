@@ -15,10 +15,12 @@ namespace Api.Controllers
     public class BookReservationController : ControllerBase
     {
         public readonly IMediator _mediator;
+        private readonly ILogger<BookReservationController> _logger;
 
-        public BookReservationController(IMediator mediator)
+        public BookReservationController(ILogger<BookReservationController> logger, IMediator mediator)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpPost("reserve")]
@@ -36,10 +38,12 @@ namespace Api.Controllers
             }
             catch (NoBookFoundException ex)
             {
+                _logger.LogInformation(ex.Message, bookId, reservationComment);
                 return NotFound(ex.Message);
             }
             catch (BookAlreadyReservedException ex)
             {
+                _logger.LogInformation(ex.Message,bookId,reservationComment);
                 return BadRequest(ex.Message);
             }
         }
