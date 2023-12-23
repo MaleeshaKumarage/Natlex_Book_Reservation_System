@@ -25,6 +25,7 @@ builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -32,7 +33,7 @@ builder.Services.AddSwaggerGen(c =>
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"; var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
-//var cs = builder.Configuration.GetConnectionString("Default");
+
 builder.Services.AddDbContext<BookStoreDbContext>(opt => opt.UseInMemoryDatabase(databaseName: "BookStore"));
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IStatusHistoryRepository, StatusHistoryRepository>();
@@ -51,12 +52,8 @@ builder.Services
 
 var app = builder.Build();
 
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
 app.UseSwagger();
 app.UseSwaggerUI();
-//}
 
 app.UseHttpsRedirection();
 
