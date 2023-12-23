@@ -61,15 +61,39 @@ namespace Infrastructure.Repository
         public async Task<List<Book>> GetAllBooks()
         {
             var bookList = await _bookStoreDbContext.books.ToListAsync();
-            foreach (var item in bookList)
+            return addStatusHistory(bookList);
+           
+        }
+
+        internal T addStatusHistory<T>(T item)
+        {
+            if (item is Book singleBook)
             {
-                var statusHistories = _bookStoreDbContext.statusHistory.Where(a => a.BookId == item.Id).ToList();
-                if (statusHistories.Count > 0)
+                var statusHistories = _bookStoreDbContext.statusHistory
+                    .Where(sh => sh.BookId == singleBook.Id)
+                    .ToList();
+
+                if (statusHistories.Any())
                 {
-                    item.StatusHistories = (ICollection<StatusHistory>)statusHistories;
+                    singleBook.StatusHistories = new HashSet<StatusHistory>(statusHistories);
                 }
             }
-            return bookList;
+            else if (item is List<Book> books)
+            {
+                foreach (Book book in books)
+                {
+                    var statusHistories = _bookStoreDbContext.statusHistory
+                        .Where(sh => sh.BookId == book.Id)
+                        .ToList();
+
+                    if (statusHistories.Any())
+                    {
+                        book.StatusHistories = new HashSet<StatusHistory>(statusHistories);
+                    }
+                }
+            }
+
+            return item;
         }
 
         public async Task<Book?> GetBookById(Guid id)
@@ -77,7 +101,7 @@ namespace Infrastructure.Repository
             var book = await _bookStoreDbContext.books.FirstOrDefaultAsync(b => b.Id == id);
             if (book != null)
             {
-                return book;
+                return addStatusHistory(book);
             }
             return null;
         }
@@ -90,7 +114,8 @@ namespace Infrastructure.Repository
 
         public async Task<List<Book>> GetBooksByStatus(bool isReserved)
         {
-            return _bookStoreDbContext.books.Where(a => a.IsReserved == isReserved).ToList();
+            var books =  _bookStoreDbContext.books.Where(a => a.IsReserved == isReserved).ToList();
+            return addStatusHistory(books);
         }
 
         public async Task<Book> RemoveReservation(Guid bookId)
