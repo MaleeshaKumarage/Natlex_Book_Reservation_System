@@ -23,6 +23,10 @@ namespace Api.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Reserve a book with reservation comment
+        /// </summary>
+        /// <returns></returns>
         [HttpPost("reserve")]
         public async Task<IActionResult> ReserveBook(Guid bookId, string reservationComment)
         {
@@ -48,6 +52,10 @@ namespace Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Remove existing Reservation
+        /// </summary>
+        /// <returns></returns>
         [HttpPost("remove-reservation")]
         public async Task<IActionResult> RemoveReservation(Guid bookId)
         {
@@ -63,7 +71,10 @@ namespace Api.Controllers
         }
 
 
-
+        /// <summary>
+        /// Get Status History of a book by Book Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("status-history/{bookId}")]
         public async Task<IActionResult> GetStatusHistory(Guid bookId)
         {

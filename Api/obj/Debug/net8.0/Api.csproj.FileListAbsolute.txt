@@ -322,3 +322,5 @@ C:\Users\asus\source\repos\Natlex_Book_Reservation_System\Api\obj\Debug\net8.0\r
 C:\Users\asus\source\repos\Natlex_Book_Reservation_System\Api\obj\Debug\net8.0\Api.pdb
 C:\Users\asus\source\repos\Natlex_Book_Reservation_System\Api\obj\Debug\net8.0\Api.genruntimeconfig.cache
 C:\Users\asus\source\repos\Natlex_Book_Reservation_System\Api\obj\Debug\net8.0\ref\Api.dll
+C:\Users\asus\source\repos\Natlex_Book_Reservation_System\Api\bin\Debug\net8.0\Api.xml
+C:\Users\asus\source\repos\Natlex_Book_Reservation_System\Api\obj\Debug\net8.0\Api.xml
