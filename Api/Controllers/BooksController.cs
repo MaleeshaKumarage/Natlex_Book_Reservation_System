@@ -106,7 +106,7 @@ namespace Api.Controllers
             {
                 return NotFound("The specified book was not found.");
             }
-            return Ok(deletedBook);
+            return NoContent();
         }
     }
 }
