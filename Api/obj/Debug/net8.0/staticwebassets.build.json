@@ -1,12 +1,20 @@
 {
   "Version": 1,
-  "Hash": "UilrVs/QEvz/x3eqGUoHUzZOfFT3jMY3SZJ49TPXEks=",
+  "Hash": "Lzil4jEn+G+VKw8N2WwKMNNEd8F9cvSmMmmPNooFG2g=",
   "Source": "Api",
   "BasePath": "_content/Api",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Api\\wwwroot",
+      "Source": "Api",
+      "ContentRoot": "C:\\Users\\asus\\source\\repos\\Natlex_Book_Reservation_System\\Api\\wwwroot\\",
+      "BasePath": "_content/Api",
+      "Pattern": "**"
+    }
+  ],
   "Assets": [
     {
       "Identity": "C:\\Users\\asus\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.0\\staticwebassets\\Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css",
@@ -64,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\asus\\source\\repos\\Natlex_Book_Reservation_System\\Api\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Api.styles.css"
+    },
+    {
+      "Identity": "C:\\Users\\asus\\source\\repos\\Natlex_Book_Reservation_System\\Api\\wwwroot\\swagger-custom.css",
+      "SourceId": "Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\asus\\source\\repos\\Natlex_Book_Reservation_System\\Api\\wwwroot\\",
+      "BasePath": "_content/Api",
+      "RelativePath": "swagger-custom.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\swagger-custom.css"
     }
   ]
 }

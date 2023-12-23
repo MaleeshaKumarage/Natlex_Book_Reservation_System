@@ -34,4 +34,12 @@
 		<ProjectReference Include="..\Presentation\Presentation.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="wwwroot\swagger\ui\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\swagger-custom.css" />
+	</ItemGroup>
+
 </Project>
