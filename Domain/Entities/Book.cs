@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public sealed class Book
+    public class Book
     {
         [Required]
         public Guid Id { get; set; }
@@ -22,6 +22,6 @@ namespace Domain.Entities
 
         public string? ReservationComment { get; set; }
 
-        public List<StatusHistory> StatusHistory { get; set; } = new List<StatusHistory>();
+        public virtual ICollection<StatusHistory> StatusHistories { get; set; } // One-to-many relationship
     }
 }
