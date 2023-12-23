@@ -1,10 +1,19 @@
 {
   "ContentRoots": [
+    "/app/wwwroot/",
     "/.nuget/fallbackpackages/microsoft.aspnetcore.components.quickgrid/8.0.0/staticwebassets/",
     "/app/obj/Debug/net8.0/scopedcss/bundle/"
   ],
   "Root": {
     "Children": {
+      "swagger-custom.css": {
+        "Children": null,
+        "Asset": {
+          "ContentRootIndex": 0,
+          "SubPath": "swagger-custom.css"
+        },
+        "Patterns": null
+      },
       "_content": {
         "Children": {
           "Microsoft.AspNetCore.Components.QuickGrid": {
@@ -12,7 +21,7 @@
               "QuickGrid.razor.js": {
                 "Children": null,
                 "Asset": {
-                  "ContentRootIndex": 0,
+                  "ContentRootIndex": 1,
                   "SubPath": "QuickGrid.razor.js"
                 },
                 "Patterns": null
@@ -20,7 +29,7 @@
               "Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css": {
                 "Children": null,
                 "Asset": {
-                  "ContentRootIndex": 0,
+                  "ContentRootIndex": 1,
                   "SubPath": "Microsoft.AspNetCore.Components.QuickGrid.bundle.scp.css"
                 },
                 "Patterns": null
@@ -36,13 +45,19 @@
       "Api.styles.css": {
         "Children": null,
         "Asset": {
-          "ContentRootIndex": 1,
+          "ContentRootIndex": 2,
           "SubPath": "Api.styles.css"
         },
         "Patterns": null
       }
     },
     "Asset": null,
-    "Patterns": null
+    "Patterns": [
+      {
+        "ContentRootIndex": 0,
+        "Pattern": "**",
+        "Depth": 0
+      }
+    ]
   }
 }
