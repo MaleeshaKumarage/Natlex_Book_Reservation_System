@@ -17,7 +17,10 @@ namespace Api.Controllers
         {
             _mediator = mediator;
         }
-
+        /// <summary>
+        /// Get All Books
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAllBooks()
         {
@@ -29,6 +32,10 @@ namespace Api.Controllers
             : NotFound("Oops! It seems like the bookstore is currently empty. We searched high and low, but couldn't find any books");
         }
 
+        /// <summary>
+        /// Get Books By Reservation Status
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("status/{isReserved}")]
         public async Task<IActionResult> GetBooksByStatus([FromRoute] bool isReserved)
         {
@@ -46,6 +53,10 @@ namespace Api.Controllers
             return Ok(books);
         }
 
+        /// <summary>
+        /// Search Book by Title
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("{title}")]
         public async Task<IActionResult> GetBookByTitle(string title)
         {
@@ -67,6 +78,10 @@ namespace Api.Controllers
             return Ok(book);
         }
 
+        /// <summary>
+        /// Create New Book
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateBook book)
         {
@@ -83,6 +98,10 @@ namespace Api.Controllers
             return Ok(createdBook);
         }
 
+        /// <summary>
+        /// Update Existing Book
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] UpdateBook updateBook)
         {
@@ -94,6 +113,10 @@ namespace Api.Controllers
             return Ok(updatedBook);
         }
 
+        /// <summary>
+        /// Delete Book
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
