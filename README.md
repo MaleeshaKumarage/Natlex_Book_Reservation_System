@@ -18,3 +18,7 @@ The application is hosted on https://natlexbookreservationsystem.azurewebsites.n
 
 
 ![](https://github.com/MaleeshaKumarage/Natlex_Book_Reservation_System/blob/Update_ReadMe/Api/wwwroot/Resources/readme.gif)
+
+## Docker
+
+docker pull maleesha/natlex_book_reservation_system
